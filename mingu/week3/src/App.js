@@ -48,23 +48,32 @@ function App() {
   }
 
   const onSortByRecentContent = () => {
-    console.log("RECENT SORT");
-    setTodoData(todoData => todoData.sort());
+    const recentData = todoData.sort((a, b) => {
+      if (a.enrollDate < b.enrollDate) return 1;
+      if (a.enrollDate > b.enrollDate) return -1;
+      return 0;
+    });
+    setTodoData(todoData => [...recentData]);
   }
 
   const onSortByOldContent = () => {
-    console.log("onSortByOldContent");
-    setTodoData(todoData => todoData.sort());
-    setTodoData(todoData => todoData.reverse());
+    const oldData = todoData.sort((a, b) => {
+      if (a.enrollDate < b.enrollDate) return -1;
+      if (a.enrollDate > b.enrollDate) return 1;
+      return 0;
+    });
+    setTodoData(todoData => [...oldData]);
   }
 
   return (
     <AppContext.Provider value={todoData}>
       <div className="appContainer">
+        <div>
+          <Btn onClick={onSortByRecentContent} title="최신순 정렬"></Btn>
+          <Btn onClick={onSortByOldContent} title="오래된순 정렬"></Btn>
+        </div>
         {addStatus ? <AddTodo addDummyData={addDummyData} addBtnClicked={addBtnClicked}/> : <Btn onClick={addBtnClicked} title="추가하기"/>}
         {todoData.length ? <TodoList dummyData={todoData} deleteTodoList={deleteTodoList} editTodoList={editTodoList}/> : <h1>Empty List</h1>}
-        {/* <Btn onClick={onSortByRecentContent} title="최신순 정렬"></Btn>
-        <Btn onClick={onSortByOldContent} title="오래된순 정렬"></Btn>         */}
       </div>
     </AppContext.Provider>
   );
