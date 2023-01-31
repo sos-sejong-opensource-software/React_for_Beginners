@@ -1,0 +1,10 @@
+body{
+    background-color: #212529;
+}
+.appContainer {
+    display: flex;
+    width:80vw;
+    justify-content: space-evenly;
+    align-items: baseline;
+    /* background-color: #7b8a99; */
+}
