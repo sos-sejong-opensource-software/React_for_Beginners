@@ -33,7 +33,9 @@ export default function AddTodo(props) {
 
     const onFormSubmitHandler = (e) => {
         e.preventDefault();
-        props.addDummyData(addData.name, addData.todo);
+        const date = new Date();
+        const enrollDate = date.getFullYear().toString() + "." + (date.getMonth() + 1).toString() + "." + date.getDate().toString() + "." +date.getHours().toString() + "." + date.getMinutes().toString() + "." + date.getSeconds().toString(); 
+        props.addDummyData(addData.name, addData.todo, enrollDate);
         props.addBtnClicked();
     }
 

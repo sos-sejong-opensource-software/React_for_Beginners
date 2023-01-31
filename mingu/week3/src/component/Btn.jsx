@@ -13,5 +13,6 @@ const ButtonBtn = styled.button`
     font-size: 15px;
     border: 1px solid #6c757d;
     border-radius: 5px;
+    padding:10px;
     height:50px;
 `

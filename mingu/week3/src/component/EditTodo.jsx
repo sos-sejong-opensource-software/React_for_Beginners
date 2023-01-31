@@ -1,30 +1,57 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import styled from 'styled-components';
+
+const editReducer = (state, action) => {
+    switch(action.type) {
+        case "EDIT_NAME": {
+            return {
+                ...state,
+                editName: action.data,
+            }
+            
+        }
+
+        case "EDIT_TODO": {
+            return {
+                ...state,
+                editTodo: action.data,
+            }
+        }
+
+        default: return state;
+    }
+}
+
 export default function EditTodo(props) {
     const editData = props.editUser;
 
-    const [editName, setEditName] = useState(editData.name);
-    const [editTodo, setEditTodo] = useState(editData.todo);
+    const [editContent, dispatchEditContent] = useReducer(editReducer, {editName: editData.name, editTodo: editData.todo});
 
 
     const onEditSubmitHandler = (e) => {
         e.preventDefault();
-        const editContent = {
+        const editContents = {
             id: editData.id,
-            name: editName,
-            todo: editTodo,
+            name: editContent.editName,
+            todo: editContent.editTodo,
         }
         props.setIsEdit(!props.isEdit);
-        props.editTodoList(editContent);
+        props.editTodoList(editContents);
 
     }
 
     const onEditName = (e) => {
-        setEditName(editName => e.target.value);
+        dispatchEditContent({
+            type: "EDIT_NAME",
+            data: e.target.value,
+        });
     }
 
     const onEditTodo = (e) => {
-        setEditTodo(editName => e.target.value);
+        dispatchEditContent({
+            type: "EDIT_TODO",
+            data: e.target.value
+        });
     }
 
 
@@ -32,11 +59,11 @@ export default function EditTodo(props) {
         <form onSubmit={onEditSubmitHandler}>
             <div>
             <label htmlFor="editName">이름</label>
-            <EditInput id="editName" type="text" value={editName} onChange={onEditName}/>
+            <EditInput id="editName" type="text" value={editContent.editName} onChange={onEditName}/>
             </div>
             <div>
             <label htmlFor="editTodo">내용</label>
-            <EditInput id="editTodo" type="text" value={editTodo} onChange={onEditTodo}/>
+            <EditInput id="editTodo" type="text" value={editContent.editTodo} onChange={onEditTodo}/>
             </div>
             <EditBtn>수정하기</EditBtn>
         </form>

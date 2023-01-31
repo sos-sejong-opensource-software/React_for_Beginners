@@ -15,7 +15,7 @@ export default function TodoItem(props) {
     return (
         <ListContainer>
             {
-                isEdit ? <EditTodo editUser={userData} editTodoList={props.editTodoList} setIsEdit={setIsEdit} isEdit={isEdit}/> : <ContentDiv>{userData.name}님의 목표는 {userData.todo}</ContentDiv>
+                isEdit ? <EditTodo editUser={userData} editTodoList={props.editTodoList} setIsEdit={setIsEdit} isEdit={isEdit}/> : <ContentDiv>{userData.name}님의 목표는 {userData.todo} <PTag>등록일 {userData.enrollDate}</PTag></ContentDiv>
             }
             
             <ContentDiv>
@@ -47,4 +47,9 @@ const ActionTag = styled.span`
     font-size: 15px;
     color: #ffd60a;
     margin: 0px 5px;
+`
+
+const PTag = styled.p`
+    color: #adb5bd;
+    font-size: 10px;
 `
